@@ -99,7 +99,4 @@ class Filtros:
         )
         self.save_image(mosaic_image, "filtro_mosaico")
 
-    def filtro_brillo(self, factor=1.0):
-        enhancer = ImageEnhance.Brightness(self.image)
-        bright_image = enhancer.enhance(factor)
-        self.save_image(bright_image, "filtro_brillo")
+  

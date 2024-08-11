@@ -31,11 +31,17 @@ def main():
         elif choice == '6':
             filters.inverso()
         elif choice == '7':
-            filters.filtro_color_a_gris()
+            print("Seleccione el método para el filtro de color a gris:")
+            print("a. A+G+B div 3")
+            print("b. 0.28*R + 0.56*G + 0.11*B")
+            print("c. Usar R, G, o B")
+            metodo = input("Ingrese el método (a, b, o c): ")
+            filters.filtro_color_a_gris(metodo)
         elif choice == '8':
             filters.filtro_mosaico()
-        elif choice == '9':
-            filters.filtro_brillo()
+        elif choice == 9:
+            cte = int(input("Ingrese el valor de la constante de brillo (positivo para aumentar, negativo para disminuir): "))
+            filters.filtro_brillo(cte)
         elif choice == '0':
             print("Saliendo...")
             break

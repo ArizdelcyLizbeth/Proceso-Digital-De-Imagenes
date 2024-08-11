@@ -30,13 +30,16 @@ def main():
             filters.filtro_morado()
         elif choice == '6':
             filters.inverso()
-        elif choice == '7':
+        elif choice == "7":
             print("Seleccione el método para el filtro de color a gris:")
             print("a. A+G+B div 3")
             print("b. 0.28*R + 0.56*G + 0.11*B")
             print("c. Usar R, G, o B")
-            metodo = input("Ingrese el método (a, b, o c): ")
-            filters.filtro_color_a_gris(metodo)
+            metodo = input("Ingrese el método (a, b, o c): ").strip().lower()
+            if metodo in ['a', 'b', 'c']:
+                filters.filtro_color_a_gris(metodo)
+            else:
+                print("Método no válido. Por favor, ingrese 'a', 'b', o 'c'.")
         elif choice == '8':
             filters.filtro_mosaico()
         elif choice == "9":

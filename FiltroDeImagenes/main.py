@@ -39,9 +39,14 @@ def main():
             filters.filtro_color_a_gris(metodo)
         elif choice == '8':
             filters.filtro_mosaico()
-        elif choice == 9:
-            cte = int(input("Ingrese el valor de la constante de brillo (positivo para aumentar, negativo para disminuir): "))
-            filters.filtro_brillo(cte)
+        elif choice == "9":
+            try:
+                constante = int(input("Ingrese el valor de brillo (positivo para aumentar, negativo para disminuir): "))
+                filters.filtro_brillo(constante)
+            except ValueError:
+                print("Por favor ingrese un número entero válido.")
+            else:
+                print("Opción no válida. Inténtelo de nuevo.")
         elif choice == '0':
             print("Saliendo...")
             break

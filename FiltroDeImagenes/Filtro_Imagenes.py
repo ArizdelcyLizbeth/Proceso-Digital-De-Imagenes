@@ -99,4 +99,14 @@ class Filtros:
         )
         self.save_image(mosaic_image, "filtro_mosaico")
 
-  
+    def filtro_brillo(self, constante):
+        brightness_image = self.image.convert("RGB")
+        pixels = brightness_image.load()
+        for y in range(brightness_image.height):
+            for x in range(brightness_image.width):
+                r, g, b = pixels[x, y]
+                r = min(max(r + constante, 0), 255)
+                g = min(max(g + constante, 0), 255)
+                b = min(max(b + constante, 0), 255)
+                pixels[x, y] = (r, g, b)
+        self.save_image(brightness_image, "filtro_brillo")

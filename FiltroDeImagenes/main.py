@@ -30,7 +30,12 @@ def main():
             filters.filtro_morado()
         elif choice == '6':
             filters.inverso()
-        
+        elif choice == '7':
+            filters.filtro_color_a_gris()
+        elif choice == '8':
+            filters.filtro_mosaico()
+        elif choice == '9':
+            filters.filtro_brillo()
         elif choice == '0':
             print("Saliendo...")
             break

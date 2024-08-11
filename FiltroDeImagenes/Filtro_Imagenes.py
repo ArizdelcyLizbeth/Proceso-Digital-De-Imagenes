@@ -1,4 +1,4 @@
-from PIL import Image, ImageOps
+from PIL import Image, ImageOps, ImageEnhance
 import os
 
 class Filtros:
@@ -63,3 +63,43 @@ class Filtros:
     def inverso(self):
         inverted_image = ImageOps.invert(self.image.convert("RGB"))
         self.save_image(inverted_image, "inverso")
+
+    def filtro_color_a_gris(self, metodo='a'):
+        gray_image = self.image.copy()
+        pixels = gray_image.load()
+        
+        for y in range(gray_image.height):
+            for x in range(gray_image.width):
+                r, g, b = pixels[x, y]
+                
+                if metodo == 'a':
+                    # Método a: A+G+B div 3
+                    gray_value = (r + g + b) // 3
+                elif metodo == 'b':
+                    # Método b: .28*R + .56*G + 0.11*B
+                    gray_value = int(0.28 * r + 0.56 * g + 0.11 * b)
+                elif metodo == 'c':
+                    # Método c: (R,R,R),(G,G,G),(B,B,B)
+                    # Ejemplo con R: (r, r, r)
+                    gray_value = r  # Esto elige el canal rojo; puede cambiar a g o b según el caso
+                
+                pixels[x, y] = (gray_value, gray_value, gray_value)
+
+        self.save_image(gray_image, f"filtro_color_a_gris_{metodo}")
+
+    def filtro_mosaico(self, size=10):
+        mosaic_image = self.image.copy()
+        small_image = mosaic_image.resize(
+            (mosaic_image.width // size, mosaic_image.height // size),
+            resample=Image.NEAREST
+        )
+        mosaic_image = small_image.resize(
+            (mosaic_image.width, mosaic_image.height),
+            resample=Image.NEAREST
+        )
+        self.save_image(mosaic_image, "filtro_mosaico")
+
+    def filtro_brillo(self, factor=1.0):
+        enhancer = ImageEnhance.Brightness(self.image)
+        bright_image = enhancer.enhance(factor)
+        self.save_image(bright_image, "filtro_brillo")

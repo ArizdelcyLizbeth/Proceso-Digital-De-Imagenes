@@ -5,3 +5,4 @@ Repositorio de la materia de Proceso Digital de Imágenes del Semestre 2025-1.
 - Manuel Cristóbal López Michelone
 - Yessica Martínez Reyes
 - César Hernández Solís
+

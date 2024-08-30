@@ -19,17 +19,22 @@ class ImageFilterApp:
         self.apply_button = tk.Button(root, text="Aplicar Filtro", command=self.apply_filter)
         self.apply_button.pack()
         
+        self.restore_button = tk.Button(root, text="Restaurar Imagen", command=self.restore_image)
+        self.restore_button.pack()
+        
         self.save_button = tk.Button(root, text="Guardar Imagen", command=self.save_image)
         self.save_button.pack()
         
         self.img = None
         self.img_array = None
-        
+        self.original_img = None  # Almacena la imagen original
+
     def upload_image(self):
         file_path = filedialog.askopenfilename(filetypes=[("Imagenes", "*.png;*.jpg;*.jpeg")])
         if file_path:
             self.img = Image.open(file_path)
             self.img_array = np.array(self.img)
+            self.original_img = self.img.copy()  # Guarda una copia de la imagen original
             self.display_image(self.img)
     
     def display_image(self, img):
@@ -55,6 +60,15 @@ class ImageFilterApp:
             self.display_image(self.img)
         else:
             messagebox.showerror("Error", "Filtro no encontrado")
+
+    def restore_image(self):
+        if self.original_img is None:
+            messagebox.showerror("Error", "No hay imagen original para restaurar")
+            return
+        
+        self.img = self.original_img.copy()  # Restaura la imagen original
+        self.img_array = np.array(self.img)
+        self.display_image(self.img)
 
     def save_image(self):
         if self.img is None:

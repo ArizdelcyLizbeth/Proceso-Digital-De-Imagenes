@@ -10,19 +10,13 @@ def blur(img_array):
     return apply_filter(img_array, filter, factor)
 
 def motion_blur(img_array):
-    filter = np.array([
-        [1, 0, 0, 0, 0, 0, 0, 0, 0],
-        [0, 1, 0, 0, 0, 0, 0, 0, 0],
-        [0, 0, 1, 0, 0, 0, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 1, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0, 1, 0, 0, 0],
-        [0, 0, 0, 0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 0, 0, 0, 0, 1, 0],
-        [0, 0, 0, 0, 0, 0, 0, 0, 1]
-    ])
-    factor = 1.0 / 9.0
+    filter_size = 15  # Tamaño del filtro
+    filter = np.zeros((filter_size, filter_size))
+    filter[int(filter_size / 2), :] = 1.0
+    factor = 1.0 / filter_size
     return apply_filter(img_array, filter, factor)
+
+
 
 def find_edges(img_array):
     filter = np.array([
@@ -55,9 +49,17 @@ def emboss(img_array):
     return apply_filter(img_array, filter, factor, bias)
 
 def promedio(img_array):
-    filter = np.ones((3, 3)) / 9.0
+    filter = np.array([
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1],
+        [1, 1, 1, 1, 1]
+    ]) / 25.0
     factor = 1.0
     return apply_filter(img_array, filter, factor)
+
+
 
 def apply_filter(img_array, filter, factor, bias=0.0):
     from scipy.signal import convolve2d

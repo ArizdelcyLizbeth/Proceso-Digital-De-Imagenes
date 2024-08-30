@@ -27,25 +27,23 @@ class ImageFilterApp:
         
         self.img = None
         self.img_array = None
-        self.original_img = None  # Almacena la imagen original
+        self.original_img = None  
+        
+        self.img_label = tk.Label(self.root)
+        self.img_label.pack()
 
     def upload_image(self):
         file_path = filedialog.askopenfilename(filetypes=[("Imagenes", "*.png;*.jpg;*.jpeg")])
         if file_path:
             self.img = Image.open(file_path)
             self.img_array = np.array(self.img)
-            self.original_img = self.img.copy()  # Guarda una copia de la imagen original
+            self.original_img = self.img.copy() 
             self.display_image(self.img)
     
     def display_image(self, img):
         img_tk = ImageTk.PhotoImage(img)
-        if hasattr(self, 'img_label'):
-            self.img_label.config(image=img_tk)
-            self.img_label.image = img_tk
-        else:
-            self.img_label = tk.Label(self.root, image=img_tk)
-            self.img_label.image = img_tk
-            self.img_label.pack()
+        self.img_label.config(image=img_tk)
+        self.img_label.image = img_tk
 
     def apply_filter(self):
         if self.img_array is None:
@@ -66,7 +64,7 @@ class ImageFilterApp:
             messagebox.showerror("Error", "No hay imagen original para restaurar")
             return
         
-        self.img = self.original_img.copy()  # Restaura la imagen original
+        self.img = self.original_img.copy()  
         self.img_array = np.array(self.img)
         self.display_image(self.img)
 

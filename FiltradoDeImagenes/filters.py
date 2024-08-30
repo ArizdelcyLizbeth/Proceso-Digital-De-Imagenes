@@ -13,8 +13,6 @@ def blur(img_array):
     factor = 1.0 / np.sum(filter)
     return apply_filter(img_array, filter, factor)
 
-import numpy as np
-
 def motion_blur(img_array):
     filter_size = 21  # Tamaño del filtro
     filter = np.zeros((filter_size, filter_size))
@@ -27,7 +25,6 @@ def motion_blur(img_array):
     factor = 1.0 / np.sum(filter)  # Normalizar por la suma de todos los elementos
     
     return apply_filter(img_array, filter, factor)
-
 
 def find_edges(img_array):
     filter = np.array([

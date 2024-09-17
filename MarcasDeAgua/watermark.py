@@ -1,16 +1,19 @@
 from PIL import Image, ImageDraw, ImageFont
 
-def add_watermark(image_path, watermark_text, output_path=None):
+def add_watermark(image_path, watermark_text, output_path=None, margin=50):
     with Image.open(image_path) as im:
         im = im.convert("RGBA")
+        
+        width, height = im.size
         
         watermark = Image.new("RGBA", im.size, (0, 0, 0, 0))
         draw = ImageDraw.Draw(watermark)
         
         font_size = 50  
-        font = ImageFont.truetype("DejaVuSans-Bold.ttf", font_size) if ImageFont.truetype else ImageFont.load_default()
-        
-        width, height = im.size
+        try:
+            font = ImageFont.truetype("DejaVuSans-Bold.ttf", font_size)
+        except IOError:
+            font = ImageFont.load_default()
         
         bbox = draw.textbbox((0, 0), watermark_text, font=font)
         text_width = bbox[2] - bbox[0]
@@ -18,12 +21,16 @@ def add_watermark(image_path, watermark_text, output_path=None):
         
         watermark_color = (255, 255, 255, 128)  
         
-       
-        spacing = 200  # Espacio entre marcas de agua 
-        for x in range(-width, width + spacing, spacing):
-            for y in range(-height, height + spacing, spacing):
+        # Calcular el espaciado 
+        spacing_x = text_width + margin
+        spacing_y = text_height + margin
+        
+        # Generar las marcas de agua en la imagen
+        for x in range(0, width + spacing_x, spacing_x):
+            for y in range(0, height + spacing_y, spacing_y):
                 draw.text((x, y), watermark_text, font=font, fill=watermark_color)
         
+        # Combinar la imagen original con la marca de agua
         combined = Image.alpha_composite(im, watermark)
         combined = combined.convert("RGB")
         

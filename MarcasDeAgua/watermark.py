@@ -1,6 +1,19 @@
 from PIL import Image, ImageDraw, ImageFont
 
 def add_watermark(image_path, watermark_text, output_path=None, margin=50):
+    """
+    Agrega una marca de agua de texto repetida en toda la imagen 
+
+    Args:
+        image_path (str): Ruta de la imagen de entrada.
+        watermark_text (str): Texto que se utilizará como marca de agua.
+        output_path (str, optional): Ruta de salida donde se guardará la imagen con la marca de agua.
+        margin (int, optional): Margen entre las repeticiones del texto de la marca de agua. 
+                                El valor por defecto es 50 píxeles.
+
+    Returns:
+        PIL.Image.Image: Imagen resultante con la marca de agua aplicada.
+    """
     with Image.open(image_path) as im:
         im = im.convert("RGBA")
         
@@ -21,7 +34,7 @@ def add_watermark(image_path, watermark_text, output_path=None, margin=50):
         
         watermark_color = (255, 255, 255, 128)  
         
-        # Calcular el espaciado 
+        # Calcular el espaciado de imagen
         spacing_x = text_width + margin
         spacing_y = text_height + margin
         
@@ -37,3 +50,4 @@ def add_watermark(image_path, watermark_text, output_path=None, margin=50):
         if output_path:
             combined.save(output_path)
         return combined
+        

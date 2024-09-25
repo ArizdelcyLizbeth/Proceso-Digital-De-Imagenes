@@ -5,7 +5,16 @@ from PIL import Image, ImageTk
 from watermark import add_watermark
 
 class WatermarkApp:
+    """
+    Permite a los usuarios cargar una imagen,
+    añadir una marca de agua de texto, y guardar la imagen resultante.
+    """
     def __init__(self, root):
+        """
+        Inicializa la interfaz de usuario 
+        Args:
+            root (Tk): Ventana principal de la aplicación.
+        """
         self.root = root
         self.root.title("Aplicación de marca de agua")
 
